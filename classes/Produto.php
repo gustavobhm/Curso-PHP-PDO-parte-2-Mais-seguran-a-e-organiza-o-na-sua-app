@@ -19,4 +19,17 @@ class Produto
         $lista = $resultado->fetchAll();
         return $lista;
     }
+
+    public function inserir()
+    {
+        $query = "INSERT INTO produtos (nome, preco, quantidade, categoria_id)
+                  VALUES (:nome, :preco, :quantidade, :categoria_id)";
+        $conexao = Conexao::pegarConexao();
+        $stmt = $conexao->prepare($query);
+        $stmt->bindValue(':nome', $this->nome);
+        $stmt->bindValue(':preco', $this->preco);
+        $stmt->bindValue(':quantidade', $this->quantidade);
+        $stmt->bindValue(':categoria_id', $this->categoria_id);
+        $stmt->execute();
+    }
 }
